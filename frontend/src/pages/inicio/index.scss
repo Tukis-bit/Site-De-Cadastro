@@ -1,0 +1,56 @@
+.cadastro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.cadastro h1 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.formulario {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 400px;
+}
+
+.formulario form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.formulario input,
+.formulario select {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.formulario button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background-color: #0056b3;
+}
