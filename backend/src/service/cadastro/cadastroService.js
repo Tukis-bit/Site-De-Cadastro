@@ -1,5 +1,5 @@
-import { cadastrar, logar } from "../../repository/cadastro/cadastroRepository.js";
-import { validarCadastro, validarLogin } from "../../validation/cadastro/cadastroValidation.js";
+import { cadastrar, logar, pegarNome } from "../../repository/cadastro/cadastroRepository.js";
+import { validarCadastro, validarLogin, validarPegarNome } from "../../validation/cadastro/cadastroValidation.js";
 import { converterDataBrasileiraParaISO } from "../../utils/datatime.js";
 
 export async function cadastrarService(informacoes){
@@ -34,3 +34,17 @@ export async function logarService(infos){
         throw error
     }
 }
+
+export async function pegarNomeService(id){
+    try {
+    validarPegarNome(id);
+    
+    const nome = await pegarNome(id);
+
+    return nome;
+
+    } 
+    catch (error) {
+    throw error;    
+    }
+} 

@@ -1,10 +1,12 @@
 import "./index.scss";
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export function Login() {
-  const [registros, setRegistros] = useState({});
+  const navigate = useNavigate();
+    const [registros, setRegistros] = useState({});
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -23,6 +25,8 @@ export function Login() {
       localStorage.setItem("token", token);
       axios.defaults.headers.common["x-access-token"] = token;
       alert("Login realizado com sucesso!");
+
+      navigate('/olaUsuario')
     } catch (error) {
       alert("Erro ao fazer login: " + error.response.data.erro);
     }

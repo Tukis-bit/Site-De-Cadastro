@@ -29,3 +29,8 @@ export function validarLogin(infos){
     if(!infos.email)
         throw new Error("É necessário informar o email");
 }
+
+export function validarPegarNome(id){
+    if(!id)
+        throw new Error('Usuário não encontrado');
+}

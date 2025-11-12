@@ -25,3 +25,14 @@ export async function logar(infos){
 
     return registros[0];
 }
+
+export async function pegarNome(id){
+    const comando = `
+    select nome from cadastro_user
+    where id = ?
+    ` 
+
+    const [nome] = await connection.query(comando,[id]);
+
+    return nome[0];
+}

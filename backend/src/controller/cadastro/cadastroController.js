@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { cadastrarService, logarService } from "../../service/cadastro/cadastroService.js";
-import { generateToken } from "../../utils/jwt.js";
+import { cadastrarService, logarService, pegarNomeService } from "../../service/cadastro/cadastroService.js";
+import { generateToken,getAuthentication } from "../../utils/jwt.js";
 
+const Autenticador = getAuthentication();
 const cad = Router();
 
 cad.post('/cadastrar', async (req,resp) => {
@@ -37,5 +38,21 @@ catch (error) {
      resp.status(400).send(global.criarErro(error));
 }
 
+})
+
+cad.get('/pegarNome', Autenticador, async(req,resp) => {
+  try {
+  const id = req.user.id;
+  
+  const nome = await pegarNomeService(id);
+
+  resp.status(201).send({
+    nome: nome.nome
+  })
+  } 
+  catch (error) {
+       global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+  }
 })
 export default cad;
