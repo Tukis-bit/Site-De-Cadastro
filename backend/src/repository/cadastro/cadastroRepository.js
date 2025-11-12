@@ -11,3 +11,17 @@ export async function cadastrar(informacoes){
 
     return 'ok'
 }
+
+export async function logar(infos){
+    const comando = `
+    select * from cadastro_user 
+    where email = ?
+    and senha = MD5(?)
+    `
+    const [registros] = await connection.query(comando,[infos.email,infos.senha]);
+
+    if(registros.length === 0)
+        throw new Error('Email Ou Senha invalidos');
+
+    return registros[0];
+}

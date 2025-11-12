@@ -22,3 +22,10 @@ export function validarCadastro(informacoes){
         throw new Error('A senha tem que ter pelo menos 8 caracteres');
     
 }
+
+export function validarLogin(infos){
+    if(!infos.senha)
+        throw new Error('É necessário informar a senha');
+    if(!infos.email)
+        throw new Error("É necessário informar o email");
+}

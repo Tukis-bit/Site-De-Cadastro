@@ -1,95 +1,98 @@
-import "./index.scss"
+import "./index.scss";
 import { useState } from "react";
-import axios from 'axios';
-import { IMaskInput } from 'react-imask';
+import axios from "axios";
+import { IMaskInput } from "react-imask";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export function Inicio() {
-    const [registros, setRegistros] = useState({});
+    const navigate = useNavigate()
+  const [registros, setRegistros] = useState({});
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setRegistros(prev => ({ ...prev, [name]: value }));
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setRegistros((prev) => ({ ...prev, [name]: value }));
+  }
+
+  async function enviarDados(e) {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5010/cadastrar", registros);
+      alert("Cadastro realizado com sucesso!");
+      navigate('/logar')
+    } catch (error) {
+      alert("Erro ao fazer cadastro: " + error.response.data.erro);
     }
+  }
 
-    async function enviarDados(e) {
-        e.preventDefault();
+  return (
+    <div className="auth-page">
+      <div className="auth-container">
+        <h1>Criar Conta</h1>
+        <form onSubmit={enviarDados}>
+          <label>Nome Completo</label>
+          <input
+            type="text"
+            name="nome"
+            placeholder="Nome"
+            onChange={handleChange}
+          />
 
-        try {
-            await axios.post("http://localhost:5010/cadastrar", registros);
-            alert("Cadastro enviado!");
-        } catch (error) {
-            alert('Erro ao enviar cadastro: ' + error.message);
-        }
-    }
+          <label>Data de Nascimento</label>
+          <IMaskInput
+            mask="00/00/0000"
+            placeholder="DD/MM/AAAA"
+            name="nascimento"
+            onChange={handleChange}
+            type="text"
+          />
 
-    return (
-        <div className="cadastro">
-            <h1>Seja Bem Vindo!</h1>
-
-            <div className="formulario">
-                <form onSubmit={enviarDados}>
-                    <label>Nome Completo</label>
-                    <input
-                        type="text"
-                        name="nome"
-                        placeholder="Nome"
-                        onChange={handleChange}
-                    />
-
-                    <label>Data de Nascimento</label>
-                    <IMaskInput
-                        mask="00/00/0000"
-                        placeholder="DD/MM/AAAA"
-                        name="nascimento"
-                        onChange={handleChange}
-
-                        type="text"
-                    />
-
-                    <label>CPF</label>
-                    <IMaskInput
-                        mask="000.000.000-00"
-                        placeholder="000.000.000-00"
-                        name="cpf"
-                        value={registros.cpf || ""}
+          <label>CPF</label>
+          <IMaskInput
+            mask="000.000.000-00"
+            placeholder="000.000.000-00"
+            name="cpf"
+            value={registros.cpf || ""}
             onAccept={(value) =>
               handleChange({ target: { name: "cpf", value } })
             }
-                    />
+          />
 
-                    <label> Email</label>
-                    <input type="text"
-                        placeholder="seuemail@gmail.com"
-                        name="email"
-                        onChange={handleChange}
-                    />
+          <label>Email</label>
+          <input
+            type="text"
+            placeholder="seuemail@gmail.com"
+            name="email"
+            onChange={handleChange}
+          />
 
-                    <label>Sexo</label>
-                    <select
-                        name="sexo"
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecione...</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Feminino">Feminino</option>
-                        <option value="Outros">Outros</option>
-                    </select>
+          <label>Sexo</label>
+          <select name="sexo" onChange={handleChange}>
+            <option value="">Selecione...</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outros">Outros</option>
+          </select>
 
-                    <label>Senha</label>
-                    <input type="password"
-                    name="senha"
-                    placeholder="Senha"
-                    onChange={handleChange} />
+          <label>Senha</label>
+          <input
+            type="password"
+            name="senha"
+            placeholder="Senha"
+            onChange={handleChange}
+          />
 
-                    <button type="submit">Cadastrar</button>
+          <button type="submit">Cadastrar</button>
+        </form>
 
-
-
-
-
-
-                </form>
-            </div>
+        <div className="link-alt">
+          <p>
+            Já tem uma conta?{" "}
+            <Link to="/logar">Entrar aqui</Link>
+          </p>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

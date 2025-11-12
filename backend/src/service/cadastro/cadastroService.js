@@ -1,12 +1,12 @@
-import { cadastrar } from "../../repository/cadastro/cadastroRepository.js";
-import { validarCadastro } from "../../validation/cadastro/cadastroValidation.js";
+import { cadastrar, logar } from "../../repository/cadastro/cadastroRepository.js";
+import { validarCadastro, validarLogin } from "../../validation/cadastro/cadastroValidation.js";
 import { converterDataBrasileiraParaISO } from "../../utils/datatime.js";
 
 export async function cadastrarService(informacoes){
     try {
     validarCadastro(informacoes);
 
-    // Converter data de nascimento para formato ISO
+    
     if (informacoes.nascimento) {
         informacoes.nascimento = converterDataBrasileiraParaISO(informacoes.nascimento);
     }
@@ -19,5 +19,18 @@ export async function cadastrarService(informacoes){
     catch (error) {
     throw error
 
+    }
+}
+
+export async function logarService(infos){
+    try {
+    validarLogin(infos);
+    
+    const conta = await logar(infos);
+
+    return conta;
+    } 
+    catch (error) {
+        throw error
     }
 }

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { cadastrarService } from "../../service/cadastro/cadastroService.js";
+import { cadastrarService, logarService } from "../../service/cadastro/cadastroService.js";
+import { generateToken } from "../../utils/jwt.js";
 
 const cad = Router();
 
@@ -20,4 +21,21 @@ catch (error) {
 
 })
 
+cad.post('/logar', async(req,resp) => {
+try {
+const infos = req.body;
+
+const conta = await logarService(infos);
+
+resp.status(201).send({
+  token: generateToken(conta),
+  id: conta.id
+})
+} 
+catch (error) {
+     global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+}
+
+})
 export default cad;
