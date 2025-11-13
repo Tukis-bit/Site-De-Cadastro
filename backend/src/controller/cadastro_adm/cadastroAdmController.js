@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { cadastrarAdmService, logarAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
+import { cadastrarAdmService, logarAdmService, permitirAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
 import { generateToken, getAuthentication } from "../../utils/jwt.js";
 
+const Autenticador = getAuthentication();
 const cadAdm = Router();
 
 cadAdm.post('/cadastrarAdm', async(req,resp) => {
@@ -29,6 +30,24 @@ cadAdm.post('/logarAdm', async(req,resp) => {
     resp.status(201).send({
         token: generateToken(registros),
         id: registros.id
+    })
+    } 
+    catch (error) {
+          global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+    }
+})
+
+cadAdm.post('/permitirADM/:id_requerido',Autenticador , async(req,resp) => {
+    try {
+    const id_adm = req.user.id;
+    
+    const id_requerido = req.params.id_requerido;
+
+    const resposta = await permitirAdmService(id_adm,id_requerido);
+
+    resp.status(201).send({
+        resposta
     })
     } 
     catch (error) {

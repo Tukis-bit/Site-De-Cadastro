@@ -62,3 +62,28 @@ else{
     throw new Error('Você não tem permissão para logar como ADM');
 }
 }
+
+
+export async function permitirAdm(id_adm,id_requerido){
+    const comando = `
+    select permissao from cadastro_adm
+    where id = ?
+    `
+
+    const [registros] = await connection.query(comando,[id_adm]);
+    
+    if(registros[0].permissao == 1){
+        const comando = `
+        update cadastro_adm
+        set permissao = true
+        where id = ?
+        `
+
+        await connection.query(comando,[id_requerido]);
+
+        return 'Adm Permitido';
+    }
+    else{
+        throw new Error('Você não tem permissão para esta ação');
+    }
+}

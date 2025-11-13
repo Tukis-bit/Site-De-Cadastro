@@ -29,7 +29,7 @@ export function CadastrarAdm() {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <h1>Criar Conta</h1>
+        <h1>Criar Conta de ADM</h1>
         <form onSubmit={enviarDados}>
           <label>Nome Completo</label>
           <input
@@ -63,6 +63,10 @@ export function CadastrarAdm() {
           <p>
             Já tem uma conta ADM?{" "}
             <Link to="/logarAdm">Entrar aqui</Link>
+          </p>
+          <p>
+            Quer fazer cadastro normal?{" "}
+            <Link to="/">Entrar aqui</Link>
           </p>
         </div>
       </div>

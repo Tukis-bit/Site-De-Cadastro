@@ -24,3 +24,14 @@ export function validarAdmLogin(infos){
         throw new Error("É necessário informar o email");
     
 }
+
+export function validarPermissaoAdm(id_adm,id_requerido){
+    if(!id_adm)
+        throw new Error('ADM não encontrado');
+    
+    
+    if(!id_requerido)
+        throw new Error('Usuario não encontrado');
+    
+
+}

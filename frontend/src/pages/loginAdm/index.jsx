@@ -26,7 +26,6 @@ export function LoginAdm() {
       axios.defaults.headers.common["x-access-token"] = token;
       alert("Login realizado com sucesso!");
 
-      navigate('/olaUsuario')
     } catch (error) {
       alert("Erro ao fazer login: " + error.response.data.erro);
     }
@@ -57,7 +56,7 @@ export function LoginAdm() {
         <div className="link-alt">
           <p>
             Ainda não tem conta?{" "}
-            <Link to="/">Cadastre-se aqui</Link>
+            <Link to="/cadastrarAdm">Cadastre-se aqui</Link>
           </p>
         </div>
       </div>
