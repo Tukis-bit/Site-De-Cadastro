@@ -9,7 +9,18 @@ export function validarCadastroAdm(infos){
     if(!infos.senha)
     throw new Error('É necessário informar a senha');
  
+    if(infos.senha.length <= 7)
+    throw new Error('A senha deve ter no mínimo 8 caracteres');
+ 
     
     
 
+}
+
+export function validarAdmLogin(infos){
+    if(!infos.senha)
+        throw new Error('É necessário informar a senha');
+    if(!infos.email)
+        throw new Error("É necessário informar o email");
+    
 }

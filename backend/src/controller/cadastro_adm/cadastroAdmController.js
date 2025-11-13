@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { cadastrarAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
+import { cadastrarAdmService, logarAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
+import { generateToken, getAuthentication } from "../../utils/jwt.js";
 
 const cadAdm = Router();
 
@@ -15,6 +16,23 @@ cadAdm.post('/cadastrarAdm', async(req,resp) => {
     } 
     catch (error) {
          global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+    }
+});
+
+cadAdm.post('/logarAdm', async(req,resp) => {
+    try {
+    const infos = req.body;
+
+    const registros = await logarAdmService(infos);
+
+    resp.status(201).send({
+        token: generateToken(registros),
+        id: registros.id
+    })
+    } 
+    catch (error) {
+          global.logErro(error);
      resp.status(400).send(global.criarErro(error));
     }
 })

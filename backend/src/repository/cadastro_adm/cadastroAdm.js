@@ -33,3 +33,32 @@ const comando = `
     return 'Aguardar permissão'
 }
 }
+
+export async function logarAdm(infos){
+    const comando = `
+    select permissao from cadastro_Adm
+    where email = ?
+    and senha = MD5(?)
+    `
+
+    const [registro] = await connection.query(comando,[infos.email,infos.senha]);
+    
+    if(registro.length === 0)
+        throw new Error('Email Ou Senha invalidos');
+    
+    if(registro[0].permissao === 1){
+    
+    const comando = `
+    select * from cadastro_adm 
+    where email = ?
+    and senha = MD5(?)
+    `
+    const [registros] = await connection.query(comando,[infos.email,infos.senha]);
+
+    return registros[0];
+}
+
+else{
+    throw new Error('Você não tem permissão para logar como ADM');
+}
+}

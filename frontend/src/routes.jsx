@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Inicio } from "./pages/inicio";
 import { Login } from "./pages/login";
 import OlaUsuario from "./pages/pos-cad";
+import { CadastrarAdm } from "./pages/cadastro_adm";
+import { LoginAdm } from "./pages/loginAdm";
 
 
 
@@ -15,6 +17,8 @@ export default function Navegação(){
             <Route path="/" element={<Inicio/>}/>
             <Route path="/logar" element={<Login/>}/>
             <Route path="/olaUsuario" element={<OlaUsuario/>}/>
+            <Route path="/cadastrarAdm" element={<CadastrarAdm/>}/>
+            <Route path="/logarAdm" element={<LoginAdm/>}/>
 
         </Routes>
         </BrowserRouter>
