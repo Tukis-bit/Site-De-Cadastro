@@ -25,6 +25,7 @@ export function LoginAdm() {
       localStorage.setItem("token", token);
       axios.defaults.headers.common["x-access-token"] = token;
       alert("Login realizado com sucesso!");
+      navigate("/pos-cadAdm");
 
     } catch (error) {
       alert("Erro ao fazer login: " + error.response.data.erro);

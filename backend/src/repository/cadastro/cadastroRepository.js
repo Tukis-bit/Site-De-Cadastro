@@ -2,9 +2,20 @@ import connection from "../connection.js";
 
 
 export async function cadastrar(informacoes){
+    const comandoVerificar = `
+    select * from cadastro_user
+    where email = ?
+    `
+
+    const [registros] = await connection.query(comandoVerificar, [informacoes.email]);
+
+    if (registros.length > 0) {
+        throw new Error('Email já cadastrado');
+    }
+
     const comando = `
     insert into cadastro_user (nome,nascimento,cpf,email,sexo,senha)
-    values 
+    values
     (?,?,?,?,?,MD5(?))
     `
     await connection.query(comando,[informacoes.nome,informacoes.nascimento,informacoes.cpf,informacoes.email,informacoes.sexo,informacoes.senha]);

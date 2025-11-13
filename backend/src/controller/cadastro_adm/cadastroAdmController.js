@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { cadastrarAdmService, logarAdmService, permitirAdmService } from "../../service/cadastro_adm/cadastroAdmService.js";
 import { generateToken, getAuthentication } from "../../utils/jwt.js";
+import { contarCadastros, pegarInfos, contarAdmsPermitidos } from "../../repository/cadastro_adm/cadastroAdm.js";
 
 const Autenticador = getAuthentication();
 const cadAdm = Router();
@@ -53,6 +54,52 @@ cadAdm.post('/permitirADM/:id_requerido',Autenticador , async(req,resp) => {
     catch (error) {
           global.logErro(error);
      resp.status(400).send(global.criarErro(error));
+    }
+});
+
+cadAdm.get('/pegarNomes', async(req,resp) => {
+    try {
+    const registros = await pegarInfos();
+    
+    resp.status(201).send({
+        registros
+    })
+    } 
+    catch (error) {
+            global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+    }
+})
+
+cadAdm.get('/contarCadastros', async (req,resp) => {
+    try {
+    const registros = await contarCadastros();
+
+    resp.status(201).send({
+        registros
+    });
+
+    }
+    catch (error) {
+            global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+
+    }
+})
+
+cadAdm.get('/contarAdmsPermitidos', async (req,resp) => {
+    try {
+    const registros = await contarAdmsPermitidos();
+
+    resp.status(201).send({
+        registros
+    });
+
+    }
+    catch (error) {
+            global.logErro(error);
+     resp.status(400).send(global.criarErro(error));
+
     }
 })
 
